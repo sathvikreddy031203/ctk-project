@@ -1,0 +1,536 @@
+.homepage-wrapper {
+  background-image: url('../../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* width: ; */
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.homepage-content-scroller {
+  padding-top: 100px;
+  padding-bottom: 50px;
+  padding-left: 50px;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.homepage-header{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-height: auto;
+  margin-bottom: 200px;
+}
+
+.homepage-heading {
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  font-size: 70px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+
+.homepage-subheading {
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInDown 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+
+.homepage-admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px; 
+}
+ 
+.homepage-admin-card {
+  background-color: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(4px); 
+  border-radius: 12px; 
+  padding: 48px;
+  max-width: 950px;
+  width: 100%;
+  text-align: center;
+  border: #e64833 2px solid;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+ 
+.homepage-admin-heading {
+  font-size: 48px; 
+  font-weight: 800; 
+  color: #fff; 
+  margin-bottom: 16px; 
+  line-height: 1.25; 
+}
+ 
+.homepage-admin-subheading {
+  font-size: 20px; 
+  color: #e5e7eb; 
+  margin-bottom: 24px; 
+  font-weight: 300; 
+}
+ 
+.homepage-admin-text {
+  font-size: 18px; 
+  color: #e5e7eb; 
+  margin-bottom: 32px; 
+}
+ 
+.homepage-admin-button {
+  text-decoration: none;
+  background-color: #E64833;
+  color: #fff;
+  font-weight: 700; 
+  padding: 12px 32px; 
+  border-radius: 9999px; 
+  font-size: 20px; 
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+ 
+.homepage-admin-button:hover {
+  background-color: #cc3c2b; 
+}
+
+.homepage-collaborations {
+  display:flex;
+  flex-direction: row;
+  width:100%;
+  justify-content: space-between;
+  margin-top: 210px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 20px;
+}
+
+.homepage-vision { 
+  width: 48%;
+  text-align: left;
+  color: #fff;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(4px); 
+  border: rgb(230, 72, 51) 2px solid;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  opacity: 0.8;
+  transform: translateX(-20px);
+  animation: fadeInLeft 1s ease-out forwards;
+  animation-delay: 0.5s;;
+  margin-left:30px;
+}
+
+.homepage-vision h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.homepage-vision p{
+  color:#fff;
+}
+
+.homepage-collabs {
+  width: 50%;
+  text-align: right;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: fadeInRight 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+.homepage-collabs h2 {
+  margin-bottom: 15px;
+}
+
+.homepage-collabs-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
+}
+
+
+.homepage-collabs-logos img {
+  height: 50px;
+  margin-left: 10px;
+  border-radius: 8px;
+}
+
+.homepage-collabs-logos .imageDiv {
+  display: flex;
+  box-shadow: 2px 2px 2px white;
+  border-radius: 8px;
+  margin-left: 10px;
+}
+
+
+.homepage-events {
+  padding: 2rem 3rem;
+  padding-left: 2rem;
+}
+
+.homepage-eventheading{
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  font-size: 70px;
+  margin-bottom: 2rem;
+  margin-top: 50px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.homepage-eventheading p{
+  color: #fff;
+  text-align: center;
+}
+
+.homepage-eventgrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.homepage-eventcard {
+  background-color: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(4px); 
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  border: #E64833 2px solid;
+}
+
+.homepage-eventcard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(230, 72, 51); 
+  backdrop-filter: blur(4px);
+}
+
+.homepage-eventcard-container {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.homepage-eventcard-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.homepage-eventcard-detail { 
+  padding: 1rem;
+  color: #fff;
+
+}
+
+.homepage-eventcard-detail p {
+  margin: 0.5rem 0;
+  color:#fff;
+  text-align: left;
+  text-wrap: wrap;
+}
+
+.homepage-moreeventsBtn {
+  background-color: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(4px); 
+  border: #E64833 1px solid;
+  margin: 2rem auto;
+  border-radius: 5px;
+  font-size: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  padding: 10px 20px;
+  display: block;
+  margin-left: auto;
+  color: #fff;
+}
+
+.homepage-moreeventsBtn:hover {
+  transform: scale(1.05);
+  background-color: rgba(230, 72, 51); 
+  backdrop-filter: blur(4px);
+  border-color: #E64833;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+
+
+
+
+@media (max-width: 426px) {
+  .homepage-wrapper {
+    background-size: cover;
+    padding: 10px;
+  }
+
+  .homepage-heading {
+    font-size: 40px; /* Reduce font size for smaller screens */
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .homepage-subheading {
+    font-size: 20px; /* Adjust subheading font size */
+    margin-bottom: 15px;
+  }
+
+  .homepage-admin-card {
+    padding: 20px; /* Reduce padding */
+    max-width: 100%; /* Make it full width */
+  }
+
+  .homepage-admin-heading {
+    font-size: 30px; /* Adjust heading size */
+  }
+
+  .homepage-admin-subheading {
+    font-size: 16px; /* Adjust subheading size */
+  }
+
+  .homepage-collaborations {
+    flex-direction: column; /* Stack items vertically */
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .homepage-vision {
+    width: 100%; /* Make sections full width */
+    margin-bottom: 20px;
+    padding: 10px;
+    margin-left:-5px;
+
+  }
+
+  .homepage-collabs {
+    width: 100%; /* Make sections full width */
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .homepage-collabs-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .homepage-collabs-logos img {
+    height: 50px;
+    margin: 10px;
+    border-radius: 8px;
+  }
+
+  .homepage-eventheading{
+    font-size:40px;
+  }
+
+  .homepage-eventgrid {
+    grid-template-columns: repeat(1, 1fr); /* Show 2 cards per row */
+    gap: 20px;
+    margin-right:20px;
+  }
+
+  .homepage-eventcard {
+     /* Make cards full width */
+     width:300px;
+     margin-right:10px;
+  }
+
+  .homepage-eventcard-container {
+    height: 120px; /* Adjust height for smaller screens */
+  }
+
+  .homepage-eventcard-detail {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .homepage-moreeventsBtn {
+    font-size: 14px; /* Adjust button font size */
+    padding: 8px 16px; /* Adjust padding */
+  }
+}
+
+
+@media (max-width:768px) and (min-width:426px){
+  .homepage-header{
+    margin-bottom:160px;
+  }
+  .homepage-wrapper {
+    background-size: cover;
+    padding: 10px;
+  }
+
+  .homepage-heading {
+    font-size: 40px; /* Reduce font size for smaller screens */
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .homepage-subheading {
+    font-size: 20px; /* Adjust subheading font size */
+    margin-bottom: 15px;
+  }
+
+  .homepage-admin-card {
+    padding: 20px; /* Reduce padding */
+    max-width: 100%; /* Make it full width */
+  }
+
+  .homepage-admin-heading {
+    font-size: 30px; /* Adjust heading size */
+  }
+
+  .homepage-admin-subheading {
+    font-size: 16px; /* Adjust subheading size */
+  }
+
+  .homepage-collaborations {
+    flex-direction: column; /* Stack items vertically */
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  .homepage-vision {
+    width: 90%; /* Make sections full width */
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .homepage-collabs {
+    width: 100%; /* Make sections full width */
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  .homepage-collabs-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .homepage-collabs-logos img {
+    height: 50px;
+    margin: 10px;
+    border-radius: 8px;
+  }
+
+  .homepage-eventheading{
+    font-size:40px;
+  }
+
+  .homepage-eventgrid {
+    grid-template-columns: repeat(3, 1fr); /* Show 2 cards per row */
+    gap: 10px;
+    margin-right:20px;
+  }
+
+  .homepage-eventcard {
+     /* Make cards full width */
+     width:200px;
+     margin-right:10px;
+  }
+
+  .homepage-eventcard-container {
+    height: 120px; /* Adjust height for smaller screens */
+  }
+
+  .homepage-eventcard-detail {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .homepage-moreeventsBtn {
+    font-size: 14px; /* Adjust button font size */
+    padding: 8px 16px; /* Adjust padding */
+  }
+}

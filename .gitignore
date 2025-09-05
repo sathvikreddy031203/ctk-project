@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+EVM_FRONTEND/.env
+EVM_BACKEND/.env
+# Logs
+logs
+*.log
+ 
+# Build
+dist/
+build/
+ 
+# OS
+.DS_Store
+ 
+# IDE
+.vscode/
+.idea/
