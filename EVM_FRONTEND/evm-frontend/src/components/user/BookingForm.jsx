@@ -1,16 +1,17 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { NotificationContext } from '../utilities/NotificationsContext';
 import { useAuth } from "../utilities/AuthProvider";
-import './BookingForm.css'; 
+import './BookingForm.css';
 
 const BookingForm = () => {
   const { id } = useParams();
-  const { refreshNotifications } = useContext(NotificationContext)
+  const { refreshNotifications } = useContext(NotificationContext);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
   const [event, setEvent] = useState(null);
-   const { isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     eventId: '',
     eventName: '',
@@ -24,9 +25,10 @@ const BookingForm = () => {
   const [confirmationMessage, setConfirmationMessage] = useState('');
 
   useEffect(() => {
-        if (!isAuthenticated) {
-          navigate('/login'); }
-      }, [isAuthenticated, navigate]);
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   // Fetch event details
   useEffect(() => {
@@ -49,14 +51,13 @@ const BookingForm = () => {
           ...prevData,
           eventName: data.event.eventName,
           eventId: data.event._id,
-          // eventDate: moment(data.eventDate).format('YYYY-MM-DD'),
           eventDate: data.event.eventDate,
         }));
       })
       .catch((error) => console.error('Error fetching event:', error));
   }, [id]);
 
-  // Handle input changes in the booking form
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: '' });
@@ -64,7 +65,6 @@ const BookingForm = () => {
 
   // Handle booking form submission
   const handleSubmit = (e) => {
-    console.log("here");
     e.preventDefault();
     const newErrors = {};
     const numberOfTicketsValue = parseInt(formData.numberOfTickets, 10);
@@ -76,60 +76,102 @@ const BookingForm = () => {
     if (!formData.userPhonenumber.match(phoneRegex)) {
       newErrors.userPhonenumber = 'Please enter a valid 10-digit phone number.';
     }
-
     if (isNaN(numberOfTicketsValue) || numberOfTicketsValue < 1 || numberOfTicketsValue > 10) {
       newErrors.numberOfTickets = 'Number of tickets must be between 1 and 10.';
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      console.log(errors)
       return;
     }
     setShowConfirmation(true);
-    console.log(showConfirmation);
   };
 
-  // Handle confirmation
-  const handleConfirm = () => {
-    console.log("confirm");
+  // ✅ Updated handleConfirm with ticketPrice & Razorpay
+  const handleConfirm = async () => {
+  try {
     const token = localStorage.getItem('jwt_token');
-    fetch(`http://localhost:5555/api/bookevents/${id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          if (response.status == 400) {
-            console.log("no tickets")
-          }
-          throw new Error('error');
-        }
-        refreshNotifications();
+    const ticketPrice = Number(event?.eventTicketPrice || 1);
+    const tickets = Number(formData.numberOfTickets || 1);
+    const totalAmount = ticketPrice * tickets; // rupees
 
-      })
-      .catch((error) => console.error('Error fetching event:', error));
-    setConfirmationMessage('Your ticket has been confirmed! Redirecting to home page...');
-    setTimeout(() => {
-      navigate('/home');
-    }, 3000);
+    const orderRes = await fetch('http://localhost:5555/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amountInRupees: totalAmount })
+    });
+    const order = await orderRes.json();
+    if (!order?.id) throw new Error('Order creation failed');
+
+    // Razorpay checkout code here...
+
+      // 2) Razorpay Checkout
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: order.amount, // paise from backend
+        currency: 'INR',
+        name: 'Event Ticket Booking',
+        description: `Booking for ${event.eventName}`,
+        order_id: order.id,
+        prefill: {
+          name: formData.userName,
+          contact: formData.userPhonenumber,
+        },
+        handler: async (response) => {
+          // 3) Verify payment
+          const verifyRes = await fetch('http://localhost:5555/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response),
+          });
+          const verify = await verifyRes.json();
+
+          if (verify.ok) {
+            // 4) Save booking
+            await fetch(`http://localhost:5555/api/bookevents/${id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+              },
+              body: JSON.stringify(formData),
+            });
+
+            refreshNotifications();
+            setConfirmationMessage(
+              `✅ Payment successful! You booked ${tickets} ticket(s) for ₹${totalAmount}. Redirecting...`
+            );
+            setTimeout(() => navigate('/home'), 3000);
+          } else {
+            alert('Payment verification failed');
+          }
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', (res) => {
+        alert(res?.error?.description || 'Payment failed');
+      });
+      rzp.open();
+    } catch (err) {
+      console.error('Error in booking/payment:', err);
+      alert('Something went wrong during payment.');
+    }
   };
 
-  // Handle cancellation
   const handleCancel = () => {
-    setConfirmationMessage('Your ticket has been cancelled! Redirecting to home page...');
+    setConfirmationMessage('❌ Your ticket has been cancelled! Redirecting...');
     setTimeout(() => {
       navigate('/');
     }, 3000);
   };
 
   if (!event && !showConfirmation) {
-    return <p className="text-center mt-5">Loading event details or no event found.</p>;
-  }
+  return <p className="text-center mt-5">Loading event details or no event found.</p>;
+}
+const ticketPrice = Number(event?.eventTicketPrice || 1); // price per ticket, fallback to 1
+const tickets = Number(formData.numberOfTickets || 1);
+const totalAmount = ticketPrice * tickets; // total
 
   return (
     <div className="booking">
@@ -137,94 +179,73 @@ const BookingForm = () => {
         {!showConfirmation ? (
           <div className="booking-form-container">
             <h1>Book Your Ticket Here</h1>
-                <form className="booking-form" onSubmit={handleSubmit}>
-                  <div>
-                    <label htmlFor="eventName">
-                      Event Name
-                    </label>
-                    <input
-                      type="text"
-                      id="eventName"
-                      name="eventName"
-                      value={formData.eventName}
-                      readOnly
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="userName">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="userName"
-                      name="userName"
-                      placeholder="Enter your name..."
-                      required
-                      onChange={handleChange}
-                      value={formData.userName}
-                    />
-                    {errors.userName && <div className="text-danger">{errors.userName}</div>}
-                  </div>
-                  <div>
-                    <label htmlFor="phoneNumber">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      name="userPhonenumber"
-                      placeholder="Enter your 10-digit number..."
-                      required
-                      onChange={handleChange}
-                      value={formData.userPhonenumber}
-                    />
-                    {errors.phoneNumber && <div className="text-danger">{errors.phoneNumber}</div>}
-                  </div>
-
-                  <div>
-                    <label htmlFor="numberOfTickets">
-                      Number of Tickets
-                    </label>
-                    <input
-                      type="number"
-                      id="numberOfTickets"
-                      name="numberOfTickets"
-                      value={formData.numberOfTickets}
-                      onChange={handleChange}
-                      min="1"
-                      max="10"
-                      required
-                    />
-                    {errors.numberOfTickets && <div className="text-danger">{errors.numberOfTickets}</div>}
-                  </div>
-                  <div>
-                    <label htmlFor="bookingDate">
-                      Event Date
-                    </label>
-                    <input
-                      type="date"
-                      id="bookingDate"
-                      name="bookingDate"
-                      required
-                      value={moment(event.eventDate).format('YYYY-MM-DD')}
-                      readOnly
-                    />
-                  </div>
-                  <div>
-                    <button type="submit"
-                    className="booking-formbutton"
-                    >
-                      Book Ticket
-                    </button>
-                  </div>
-                </form>
+            <form className="booking-form" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="eventName">Event Name</label>
+                <input type="text" id="eventName" name="eventName" value={formData.eventName} readOnly />
               </div>
+              <div>
+                <label htmlFor="userName">Name</label>
+                <input
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  placeholder="Enter your name..."
+                  required
+                  onChange={handleChange}
+                  value={formData.userName}
+                />
+                {errors.userName && <div className="text-danger">{errors.userName}</div>}
+              </div>
+              <div>
+                <label htmlFor="phoneNumber">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="userPhonenumber"
+                  placeholder="Enter your 10-digit number..."
+                  required
+                  onChange={handleChange}
+                  value={formData.userPhonenumber}
+                />
+                {errors.userPhonenumber && <div className="text-danger">{errors.userPhonenumber}</div>}
+              </div>
+              <div>
+                <label htmlFor="numberOfTickets">Number of Tickets</label>
+                <input
+                  type="number"
+                  id="numberOfTickets"
+                  name="numberOfTickets"
+                  value={formData.numberOfTickets}
+                  onChange={handleChange}
+                  min="1"
+                  max="10"
+                  required
+                />
+                {errors.numberOfTickets && <div className="text-danger">{errors.numberOfTickets}</div>}
+              </div>
+              <div>
+                <label htmlFor="bookingDate">Event Date</label>
+                <input
+                  type="date"
+                  id="bookingDate"
+                  name="bookingDate"
+                  required
+                  value={moment(event.eventDate).format('YYYY-MM-DD')}
+                  readOnly
+                />
+              </div>
+              <div>
+                <p><strong>Ticket Price:</strong> ₹{ticketPrice}</p>
+              </div>
+              <div>
+                <button type="submit" className="booking-formbutton">Book Ticket</button>
+              </div>
+            </form>
+          </div>
         ) : (
-          // Confirmation Page
           <div className="confirmation-container">
-            <h1>
-              Confirm Your Booking
-            </h1>
+            <h1>Confirm Your Booking</h1>
             {confirmationMessage ? (
               <div>
                 <p>{confirmationMessage}</p>
@@ -235,18 +256,12 @@ const BookingForm = () => {
                 <p><strong>User Name:</strong> {formData.userName}</p>
                 <p><strong>Phone Number:</strong> {formData.userPhonenumber}</p>
                 <p><strong>Event Date:</strong> {moment(formData.eventDate).format('YYYY-MM-DD')}</p>
-                <p><strong>Number of Tickets:</strong> {formData.numberOfTickets}</p>
+                <p><strong>Ticket Price:</strong> ₹{ticketPrice}</p>
+                <p><strong>Number of Tickets:</strong> {tickets}</p>
+                <p><strong>Total Amount:</strong> ₹{totalAmount}</p>
                 <div>
-                  <button
-                    onClick={handleConfirm}
-                  >
-                    Confirm Ticket
-                  </button>
-                  <button
-                    onClick={handleCancel}
-                  >
-                    Cancel Ticket
-                  </button>
+                  <button onClick={handleConfirm}>Confirm & Pay</button>
+                  <button onClick={handleCancel}>Cancel</button>
                 </div>
               </div>
             )}
@@ -255,5 +270,6 @@ const BookingForm = () => {
       </div>
     </div>
   );
-}
+};
+
 export default BookingForm;
