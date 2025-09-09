@@ -152,7 +152,7 @@ export const feedback = async (req, res) => {
         const feedback = await Feedback.create({
             eventId,
             eventName,
-            userId,
+           userId: req.user._id,
             rating,
             comments
         });
@@ -168,16 +168,21 @@ export const feedback = async (req, res) => {
 
 export const viewFeedback = async (req, res) => {
     try {
-        const eventId = req.params.id;
+        const eventId = req.params.id;   // extract event id from request URL
         logger.info(`view feedbacks requested for event: ${eventId}`);
-        const feedbacks = await Feedback.find({ eventId });
+
+        // query DB: find all feedbacks for that event, and populate only userName from User model
+        const feedbacks = await Feedback.find({ eventId })
+            .populate("userId", "userName");
+        console.log(feedbacks);
         logger.info(`view feedbacks for event: ${eventId} returned`);
-        res.status(200).json({ feedbacks });
+        res.status(200).json({ feedbacks });  // send JSON response
     } catch (error) {
-        logger.error(`Error creating user: ${error} ${error.message}`);
+        logger.error(`Error fetching feedback: ${error} ${error.message}`);
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
 
 export const viewTickets = async (req, res) => {
     try {

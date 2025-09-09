@@ -52,8 +52,12 @@ const DisplayEvents = () => {
         if (!response.ok) {
           console.log(response.json());
         }
+ 
+        navigate('/event');
+ 
         
         navigate('/home');
+ 
       })
       .catch(error => {
         console.error("Error fetching event details:", error);

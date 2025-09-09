@@ -133,6 +133,7 @@
     transition: transform 0.2s ease-in-out;
     text-align: left;
     max-width: 287px;
+    margin-left: 10px;
 }
 
 .booking-card:hover {
