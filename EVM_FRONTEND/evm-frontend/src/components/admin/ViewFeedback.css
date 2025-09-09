@@ -113,7 +113,9 @@
     font-size: 3rem;
     color: #ffffff;
 }
-
+.review-username{
+    color: black;
+}
 .all-reviews-list {
     display: grid;
     gap: 20px;
@@ -262,4 +264,51 @@
         /* Reduce font size */
     }
 
+}
+.all-reviews-list {
+    display: grid;
+    gap: 20px;
+}
+
+.review-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    text-align: center;   /* ✅ centers everything */
+}
+
+.review-username {
+    color: black;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.review-rating {
+    margin: 10px 0;
+    font-weight: bold;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* spacing between stars and text */
+}
+
+.star {
+    font-size: 1.2em;
+}
+
+.filled-star {
+    color: gold;
+}
+
+.empty-star {
+    color: lightgray;
+}
+
+.review-comment {
+    color:black;
+    line-height: 1.5;
+    margin-top: 10px;
 }

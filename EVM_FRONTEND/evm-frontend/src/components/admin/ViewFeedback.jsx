@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ViewFeedback.css';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'; // Import from recharts
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'; 
 import { useParams } from 'react-router-dom';
 
 const ViewFeedback = () => {
@@ -32,8 +32,6 @@ const ViewFeedback = () => {
         };
     }, []);
 
-    
-
     useEffect(() => {
         const fetchFeedbacks = async () => {
             try {
@@ -61,7 +59,7 @@ const ViewFeedback = () => {
         };
 
         fetchFeedbacks();
-    }, []);
+    }, [id]);
 
     const calculateFeedbackStats = () => {
         if (feedbacks.length === 0) {
@@ -102,6 +100,7 @@ const ViewFeedback = () => {
     const { pieChartData, averageRating, totalReviews } = calculateFeedbackStats();
 
     const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#0088fe'].reverse();
+
     if (loading) {
         return (
             <div className="view-feedbacks-container">
@@ -122,7 +121,7 @@ const ViewFeedback = () => {
     return (
         <div className="view-feedbacks-wrapper">
             <div className="view-feedbacks-container">
-                <h1>{ }Event Feedbacks</h1>
+                <h1>Event Feedbacks</h1>
 
                 {totalReviews === 0 ? (
                     <p>No feedbacks available yet for this event.</p>
@@ -149,7 +148,7 @@ const ViewFeedback = () => {
                                             cx="50%"
                                             cy="50%"
                                             labelLine={false}
-                                            outerRadius={window.innerWidth <= 480 ? 50 : 70} // Adjust radius
+                                            outerRadius={window.innerWidth <= 480 ? 50 : 70}
                                             fill="#8884d8"
                                             dataKey="value"
                                             label={({ name, percent }) => `${name.replace(' Stars', '')}: ${(percent * 100).toFixed(0)}%`}
@@ -171,19 +170,26 @@ const ViewFeedback = () => {
                             <div className="all-reviews-list">
                                 {feedbacks.map((feedback, index) => (
                                     <div key={feedback._id || index} className="review-card">
-                                        <div className="review-header">
-                                            <span className="review-rating">
-                                                Rating: {feedback.rating} / 5
-                                                {' '}
-                                                {Array.from({ length: feedback.rating }, (_, i) => (
-                                                    <span key={`filled-star-${index}-${i}`} className="star filled-star">&#9733;</span>
-                                                ))}
-                                                {Array.from({ length: 5 - feedback.rating }, (_, i) => (
-                                                    <span key={`empty-star-${index}-${i}`} className="star empty-star">&#9734;</span>
-                                                ))}
-                                            </span>
+                                        {/* ✅ Username */}
+                                        <p className="review-username">
+                                            <strong>User:</strong> {feedback.userId.userName}
+                                        </p>
+
+                                        {/* ✅ Rating in the middle */}
+                                        <div className="review-rating">
+                                            <strong>Rating:</strong> {feedback.rating} / 5{" "}
+                                            {Array.from({ length: feedback.rating }, (_, i) => (
+                                                <span key={`filled-star-${index}-${i}`} className="star filled-star">&#9733;</span>
+                                            ))}
+                                            {Array.from({ length: 5 - feedback.rating }, (_, i) => (
+                                                <span key={`empty-star-${index}-${i}`} className="star empty-star">&#9734;</span>
+                                            ))}
                                         </div>
-                                        <p className="review-comment">{feedback.comments || 'No comment provided.'}</p>
+
+                                        {/* ✅ Comment */}
+                                        <p className="review-comment">
+                                            <strong>Comment:</strong> {feedback.comments || "No comment provided."}
+                                        </p>
                                     </div>
                                 ))}
                             </div>

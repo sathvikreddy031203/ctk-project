@@ -87,13 +87,13 @@ export const updateEvent = async (req, res) => {
         logger.info(`update event is requested`)
         const { id } = req.params;
         await sendEventUpdateNotification(id);
-        const { eventName, eventDate, eventTime, eventLocation,eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity} = req.body;
-        if (!eventName || !eventDate || !eventTime || !eventLocation || !eventOrganizer || !eventEmail || !eventPhonenumber || !eventCategory || !eventDescription || !eventCapacity) {
+        const { eventName, eventDate, eventTime, eventLocation, eventPrice,eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity} = req.body;
+        if (!eventName || !eventDate || !eventTime || !eventLocation || !eventPrice || !eventOrganizer || !eventEmail || !eventPhonenumber || !eventCategory || !eventDescription || !eventCapacity) {
             logger.warn(`All events details are required to update the event`);
             return res.status(400).json({ message: "All fields are required" });
         }
  
-        const updatedEvent = await Event.findByIdAndUpdate(id, { eventName, eventDate, eventTime, eventLocation,eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity }, { new: true });
+        const updatedEvent = await Event.findByIdAndUpdate(id, { eventName, eventDate, eventTime, eventLocation, eventPrice, eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity }, { new: true });
  
         if (!updatedEvent) {
             logger.warn(`event details not found for the event id:${id}`);
