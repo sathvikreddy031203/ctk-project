@@ -80,7 +80,7 @@ const EventDetails = () => {
       <div className="event-details-container">
         <div className="event-details-top ">
           <img
-            src={event.eventImage}
+            src={event.eventImage} 
             alt={event.eventName}
             className="event-details-image"
           />
