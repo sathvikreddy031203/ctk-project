@@ -8,9 +8,6 @@ import { sendWelcomeNotification } from '../services/notifications.js';
 import mongoose from 'mongoose';
 import { logger } from '../logs/logs.js'; 
 
-
-
-
 const createToken = (id, isAdmin) => {
     return jwt.sign({ id, isAdmin }, process.env.JWT_SECRET, {
         expiresIn: 259200
@@ -163,7 +160,7 @@ export const feedback = async (req, res) => {
         res.status(200).json({ message: "Feedback submitted successfully", feedback })
 
     } catch (err) {
-        logger.error(`Error creating user: ${error} ${error.message}`);
+        logger.error(`Error creating user: ${err} ${err.message}`);
         res.status(500).json({ message: "Internal server error while fetching bookings." });
     }
 
