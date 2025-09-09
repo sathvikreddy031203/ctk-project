@@ -29,13 +29,14 @@
   gap: 20px;
 }
 .event-details-image {
-  width: 50%;
+  width: 80%;
   height: 400px;
-  object-fit: cover;
+  /* object-fit: contain; ✅ shows whole image */
   border-radius: 8px;
 }
+
 .event-details-info {
-  width: 50%;
+  width: 70%;
   height: 400px;
   display: flex;
   flex-direction: column;
