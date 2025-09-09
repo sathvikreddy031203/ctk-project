@@ -52,6 +52,7 @@ const DisplayEvents = () => {
         if (!response.ok) {
           console.log(response.json());
         }
+        
         navigate('/home');
       })
       .catch(error => {

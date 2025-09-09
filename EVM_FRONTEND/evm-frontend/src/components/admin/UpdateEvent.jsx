@@ -6,7 +6,7 @@ const UpdateEvent = () => {
   const { id } = useParams();
   const [updatedEvent, setUpdatedEvent] = useState({});
   const [loading, setLoading] = useState(true);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false); // New state for success message visibility
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -36,21 +36,23 @@ const UpdateEvent = () => {
     fetchEvent();
   }, [id]);
 
-  // useEffect to handle redirection after successful update
   useEffect(() => {
     let timer;
     if (showSuccessMessage) {
       timer = setTimeout(() => {
-        navigate("/home"); // Redirect to home after 3 seconds
+        navigate("/home");
       }, 3000);
     }
-    // Cleanup function to clear the timeout
     return () => clearTimeout(timer);
-  }, [showSuccessMessage, navigate]); // Depend on `showSuccessMessage` and `Maps`
+  }, [showSuccessMessage, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUpdatedEvent({ ...updatedEvent, [name]: value });
+    if (name === "eventTicketPrice" || name === "eventCapacity") {
+      setUpdatedEvent({ ...updatedEvent, [name]: parseInt(value, 10) || 0 });
+    } else {
+      setUpdatedEvent({ ...updatedEvent, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -70,33 +72,29 @@ const UpdateEvent = () => {
         throw new Error(result.message || "Failed to update event");
       }
 
-      setShowSuccessMessage(true); // Set state to show the success message
-      setError(null); // Clear any previous errors
-
+      setShowSuccessMessage(true);
+      setError(null);
     } catch (error) {
       console.error("Error updating event:", error);
       setError("Failed to update event: " + error.message);
-      setShowSuccessMessage(false); // Ensure message is hidden on error
+      setShowSuccessMessage(false);
     }
   };
 
-  // Conditional renders for initial loading and errors outside the main form
   if (loading) {
     return <div className="loading-message">Loading event data...</div>;
   }
 
-  if (error && !showSuccessMessage) { // Show error unless success message is already being shown
+  if (error && !showSuccessMessage) {
     return <div className="error-message-container">Error: {error}</div>;
   }
 
-  // Fallback for when updatedEvent is unexpectedly empty after loading (e.g., event not found)
   if (!updatedEvent || Object.keys(updatedEvent).length === 0) {
     return <div className="error-message-container">Event not found or failed to load.</div>;
   }
 
   return (
     <div className="update-event-page">
-      {/* Conditionally render the success message within the page structure */}
       {showSuccessMessage ? (
         <div className="success-message-container">
           <h2 className="success-message">Event updated successfully! Redirecting...</h2>
@@ -183,6 +181,19 @@ const UpdateEvent = () => {
               />
             </label>
             <label className="update-event-label">
+              Price:
+              <input
+                type="number"
+                name="eventTicketPrice"
+                value={updatedEvent.eventTicketPrice || ''}
+                onChange={handleChange}
+                required
+                className="update-event-input"
+                min="0"
+                step="1"
+              />
+            </label>
+            <label className="update-event-label">
               Category:
               <input
                 type="text"
@@ -212,6 +223,8 @@ const UpdateEvent = () => {
                 onChange={handleChange}
                 required
                 className="update-event-input"
+                min="1"
+                step="1"
               />
             </label>
 
