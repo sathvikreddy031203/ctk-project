@@ -48,7 +48,7 @@
     margin-bottom: 5px;
 }
  
-.create-event-form input,textarea {
+.create-event-form input,textarea,.create-event-form select {
     width: 100%;
     padding: 8px;
     font-size: 14px;

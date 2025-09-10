@@ -10,7 +10,7 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5555/api/getevents', {
+    fetch('http://13.48.125.242:8000/api/getevents', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

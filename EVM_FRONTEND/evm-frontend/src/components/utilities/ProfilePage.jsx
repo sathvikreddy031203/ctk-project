@@ -34,7 +34,7 @@ const ProfilePage = () => {
   const handleCancelTicket = useCallback(
     async (bookingId) => {
       try {
-        const response = await fetch(`http://localhost:5555/api/cancelticket/${bookingId}`, {
+        const response = await fetch(`http://13.48.125.242:8000/api/cancelticket/${bookingId}`, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const ProfilePage = () => {
           return;
         }
 
-        const response = await fetch("http://localhost:5555/api/profilepage", {
+        const response = await fetch("http://13.48.125.242:8000/api/profilepage", {
           method: 'GET',
           headers: {
             "Content-Type": "application/json",

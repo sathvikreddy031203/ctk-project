@@ -20,7 +20,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEventDetails = async (eventId) => {
       try {
-        const response = await fetch(`http://localhost:5555/api/getevent/${eventId}`, {
+        const response = await fetch(`http://13.48.125.242:8000/api/getevent/${eventId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

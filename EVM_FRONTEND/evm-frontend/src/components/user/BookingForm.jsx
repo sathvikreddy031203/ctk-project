@@ -32,7 +32,7 @@ const BookingForm = () => {
 
   // Fetch event details
   useEffect(() => {
-    fetch(`http://localhost:5555/api/getevent/${id}`, {
+    fetch(`http://13.48.125.242:8000/api/getevent/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const BookingForm = () => {
     const tickets = Number(formData.numberOfTickets || 1);
     const totalAmount = ticketPrice * tickets; // rupees
 
-    const orderRes = await fetch('http://localhost:5555/api/create-order', {
+    const orderRes = await fetch('http://13.48.125.242:8000/api/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amountInRupees: totalAmount })
@@ -119,7 +119,7 @@ const BookingForm = () => {
         },
         handler: async (response) => {
           // 3) Verify payment
-          const verifyRes = await fetch('http://localhost:5555/api/verify-payment', {
+          const verifyRes = await fetch('http://13.48.125.242:8000/api/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(response),
@@ -128,7 +128,7 @@ const BookingForm = () => {
 
           if (verify.ok) {
             // 4) Save booking
-            await fetch(`http://localhost:5555/api/bookevents/${id}`, {
+            await fetch(`http://13.48.125.242:8000/api/bookevents/${id}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
