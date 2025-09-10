@@ -27,8 +27,4 @@ userRouter.get("/verifytoken",verifyToken,(req, res) => {
     return res.status(201).json();
 });
 
-
-
-
-
 export default userRouter;

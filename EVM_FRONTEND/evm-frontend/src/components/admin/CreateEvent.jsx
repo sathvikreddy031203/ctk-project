@@ -313,7 +313,7 @@ const CreateEvent = () => {
                 </div>
               )}
 
-              <p>Redirecting to home page in 5 seconds...</p>
+              <p>Redirecting to home page...</p>
             </div>
           </div>
         )}
