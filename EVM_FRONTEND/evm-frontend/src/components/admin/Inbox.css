@@ -7,11 +7,11 @@
     position: relative;
     overflow-x: hidden;
     min-height: 100vh;
-    width: 250%;
+    width: 100vw;
 }
 
 .inbox-container {
-    padding: 20px;
+    padding: 10px;
     margin-left: 80px;   /* Push content away from sidebar */
     margin-right: 20px;  /* Add a little space on the right too */
     font-family: Arial, sans-serif;

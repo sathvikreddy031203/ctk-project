@@ -88,29 +88,6 @@ export const getEvents = async (req, res) => {
 };
 
 export const updateEvent = async (req, res) => {
- 
-    try {
-        logger.info(`update event is requested`)
-        const { id } = req.params;
-        await sendEventUpdateNotification(id);
-        const { eventName, eventDate, eventTime, eventLocation, eventPrice,eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity} = req.body;
-        if (!eventName || !eventDate || !eventTime || !eventLocation || !eventPrice || !eventOrganizer || !eventEmail || !eventPhonenumber || !eventCategory || !eventDescription || !eventCapacity) {
-            logger.warn(`All events details are required to update the event`);
-            return res.status(400).json({ message: "All fields are required" });
-        }
- 
-        const updatedEvent = await Event.findByIdAndUpdate(id, { eventName, eventDate, eventTime, eventLocation, eventPrice, eventOrganizer,eventEmail,eventPhonenumber, eventCategory, eventDescription, eventCapacity }, { new: true });
- 
-        if (!updatedEvent) {
-            logger.warn(`event details not found for the event id:${id}`);
-            return res.status(404).json({ message: "Event not found" });
-        }
-        logger.info(`update event is successfully executed`);
-        res.status(200).json({ message: "Event updated successfully", event: updatedEvent });
-    } catch (error) {
-        logger.error(`Error updating event: ${error} ${error.message}`);
-        res.status(500).json({ message: "Error updating event", error: error.message });
-    }
   try {
     logger.info(`update event is requested`);
     const { id } = req.params;
@@ -121,26 +98,34 @@ export const updateEvent = async (req, res) => {
       eventDate,
       eventTime,
       eventLocation,
-      eventTicketPrice,
+      eventTicketPrice,   // 👈 use consistent field
       eventOrganizer,
       eventEmail,
       eventPhonenumber,
       eventCategory,
       eventDescription,
-      eventCapacity
+      eventCapacity,
     } = req.body;
 
+    // Validation
     if (
-      !eventName || !eventDate || !eventTime || !eventLocation ||
-      eventTicketPrice === undefined || !eventOrganizer || !eventEmail ||
-      !eventPhonenumber || !eventCategory || !eventDescription || !eventCapacity
+      !eventName ||
+      !eventDate ||
+      !eventTime ||
+      !eventLocation ||
+      eventTicketPrice === undefined ||
+      !eventOrganizer ||
+      !eventEmail ||
+      !eventPhonenumber ||
+      !eventCategory ||
+      !eventDescription ||
+      !eventCapacity
     ) {
       logger.warn(`All events details are required to update the event`);
       return res.status(400).json({ message: "All fields are required" });
- 
     }
 
-    // Ensure integers only
+    // Update
     const updatedEvent = await Event.findByIdAndUpdate(
       id,
       {
@@ -165,12 +150,18 @@ export const updateEvent = async (req, res) => {
     }
 
     logger.info(`update event is successfully executed`);
-    res.status(200).json({ message: "Event updated successfully", event: updatedEvent });
+    res.status(200).json({
+      message: "Event updated successfully",
+      event: updatedEvent,
+    });
   } catch (error) {
     logger.error(`Error updating event: ${error} ${error.message}`);
-    res.status(500).json({ message: "Error updating event", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating event", error: error.message });
   }
 };
+
 
 
 export const getEvent = async (req, res) => {

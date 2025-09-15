@@ -34,24 +34,24 @@ const HomePage = () => {
       })
   }, []);
 
-  const handleFetchUsers = () => {
-    fetch('http://localhost:5555/api/get-users', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch users');
-        return res.json();
-      })
-      .then((data) => {
-        setUsers(data.users || []);
-        setShowUsers(true); // show after fetching
-      })
-      .catch((err) => console.error(err));
-  };
+  // const handleFetchUsers = () => {
+  //   fetch('http://localhost:5555/api/get-users', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error('Failed to fetch users');
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setUsers(data.users || []);
+  //       setShowUsers(true); // show after fetching
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   const handleEventClick = (id) => {
     console.log(id);
@@ -117,12 +117,7 @@ const HomePage = () => {
                   Create New Event
                 </a>
               </div>
-              <button
-                className="homepage-admin-button"
-                onClick={handleFetchUsers}
-              >
-                View Users
-              </button>
+              
             </div>
           )}
 
