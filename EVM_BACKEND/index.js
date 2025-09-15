@@ -14,9 +14,7 @@ import contactRouter from "./routes/contactRoute.js";
 import jwt from 'jsonwebtoken';
 import paymentRoute from './routes/paymentRoute.js';
 
-// extra imports for Razorpay
-import Razorpay from "razorpay";
-import crypto from "crypto";
+
 
 dotenv.config();
 
@@ -40,20 +38,6 @@ app.use("/api", notificationRouter);
 app.use("/api", contactRouter);
 app.use('/api', paymentRoute);
 
-app.get('/api/check-auth', (req, res) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ isAuthenticated: false });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.json({ isAuthenticated: true, isAdmin: decoded.isAdmin });
-  } catch (error) {
-    res.status(401).json({ isAuthenticated: false });
-  }
-});
-
 
 // ------------------ SERVER START ------------------
 mongoose
@@ -70,3 +54,30 @@ mongoose
     logger.error(`Error connecting to MongoDB: ${error.message}`);
     console.error("Error connecting to MongoDB:", error);
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  app.get('/api/check-auth', (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ isAuthenticated: false });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ isAuthenticated: true, isAdmin: decoded.isAdmin });
+  } catch (error) {
+    res.status(401).json({ isAuthenticated: false });
+  }
+});

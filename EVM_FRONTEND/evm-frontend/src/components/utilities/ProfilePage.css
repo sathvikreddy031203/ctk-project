@@ -259,17 +259,20 @@
 
 
 .users-table-container {
-  max-height: 250px;   /* adjust height as needed */
-  overflow-y: auto;
+  max-height: 250px;   /* Controls vertical height */
+  overflow-y: auto;    /* Only vertical scroll */
+  overflow-x: hidden;  /* Prevents horizontal scrollbar */
   margin-top: 10px;
   border: 1px solid #444;
   border-radius: 6px;
+  width: 100%;         /* Ensure container spans full width */
+  box-sizing: border-box;
 }
 
 .users-table {
-  width: 100%;
+  width: 100%;          /* Make table fit container width */
   border-collapse: collapse;
-  margin-top: 10px;
+  table-layout: fixed;  /* Prevent table from overflowing */
 }
 
 .users-table th,
@@ -278,6 +281,9 @@
   padding: 8px;
   text-align: left;
   color: #fff;
+  white-space: nowrap;   /* Prevent breaking but may cause overflow */
+  overflow: hidden;      /* Hide overflowing content */
+  text-overflow: ellipsis; /* Add "..." when text overflows */
 }
 
 /* Users List Header */
