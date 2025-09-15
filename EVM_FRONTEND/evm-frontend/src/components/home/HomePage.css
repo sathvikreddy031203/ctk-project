@@ -387,6 +387,42 @@
               0 6px 20px rgba(0, 0, 0, 0.19);
 }
 
+
+/* Pagination */
+.homepage-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination-btn {
+  background: #e64833;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pagination-btn:disabled {
+  background: #888;
+  cursor: not-allowed;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #c53a2a;
+}
+
+.pagination-info {
+  font-weight: bold;
+  color: #fff;
+}
+
+
+
 /* Animations */
 @keyframes fadeInDown {
   0% { opacity: 0; transform: translateY(-20px); }
