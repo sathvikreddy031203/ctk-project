@@ -4,46 +4,54 @@ import { sendEventCancelNotification, sendEventUpdateNotification } from '../ser
 import { logger } from '../logs/logs.js';
 
 export const createEvent = async (req, res) => {
-    try {
-        const { 
-            eventName,
-            eventDate,
-            eventTime,
-            eventDescription,
-            eventOrganizer,
-            eventLocation,
-            eventPhonenumber,
-            eventEmail,
-            eventCategory,
-            eventImage,
-            eventTicketPrice,
-            eventCapacity 
-        } = req.body;
+  try {
+    const {
+      eventName,
+      eventDate,
+      eventTime,
+      eventDescription,
+      eventOrganizer,
+      eventLocation,
+      eventPhonenumber,
+      eventEmail,
+      eventCategory,
+      eventImage,
+      eventTicketPrice,
+      eventCapacity
+    } = req.body;
 
-        logger.info(`event creation request received`);
+    logger.info(`Event creation request received`);
 
-        const newEvent = new Event({
-            eventName,
-            eventDate,
-            eventTime,
-            eventDescription,
-            eventOrganizer,
-            eventLocation,
-            eventPhonenumber,
-            eventEmail,
-            eventCategory,
-            eventImage,
-            eventTicketPrice,
-            eventCapacity,
-            eventAvailableTickets: eventCapacity
-        });
-        await newEvent.save();
-        logger.info(`event created with id ${newEvent._id}`);
-        res.status(201).json({ message: "Event created successfully", event: newEvent });
-    } catch (error) {
-        logger.error(`Error creating event: ${error} ${error.message}`);
-        res.status(500).json({ message: "Internal server error" });
+    // ❌ Check if an event with the same name exists
+    const existingEvent = await Event.findOne({ eventName });
+    if (existingEvent) {
+      logger.warn(`Event creation failed: duplicate name "${eventName}"`);
+      return res.status(400).json({ message: "An event with this name already exists." });
     }
+
+    const newEvent = new Event({
+      eventName,
+      eventDate,
+      eventTime,
+      eventDescription,
+      eventOrganizer,
+      eventLocation,
+      eventPhonenumber,
+      eventEmail,
+      eventCategory,
+      eventImage,
+      eventTicketPrice,
+      eventCapacity,
+      eventAvailableTickets: eventCapacity
+    });
+
+    await newEvent.save();
+    logger.info(`Event created with id ${newEvent._id}`);
+    res.status(201).json({ message: "Event created successfully", event: newEvent });
+  } catch (error) {
+    logger.error(`Error creating event: ${error} ${error.message}`);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export const deleteEvent = async (req, res) => {

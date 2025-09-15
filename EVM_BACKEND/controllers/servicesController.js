@@ -1,8 +1,10 @@
 import { User } from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import { sendMailForOtp } from '../services/nodemailer.js'
+// import { sendMailForOtp } from '../services/nodemailer.js'
 import bcrypt from 'bcryptjs';
 import { logger } from '../logs/logs.js';
+// import transporter from "../services/nodemailer.js";
+import { sendBookingConfirmationMail, sendMailForOtp } from "../services/nodemailer.js";
 
 
 
@@ -88,6 +90,35 @@ export const verifyOtp = async (req, res) => {
     }
 }
 
+
+
+
+
+
+// 📩 API Controller to trigger booking email
+export const sendBookingEmail = async (req, res) => {
+  try {
+    const { userEmail, userName, userPhone, eventName, eventDate, tickets, totalAmount } = req.body;
+
+    if (!userEmail || !userName || !eventName) {
+      return res.status(400).json({ error: "Missing required booking details." });
+    }
+
+    await sendBookingConfirmationMail(userEmail, {
+      userName,
+      userPhone,
+      eventName,
+      eventDate,
+      tickets,
+      totalAmount,
+    });
+
+    return res.json({ message: "Booking confirmation email sent successfully." });
+  } catch (error) {
+    console.error("Error sending booking confirmation email:", error);
+    return res.status(500).json({ error: "Failed to send booking confirmation email." });
+  }
+};
 
 
 

@@ -146,16 +146,18 @@ export const getProfileDetails = async (req, res) => {
 
 export const feedback = async (req, res) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user._id || req.user.id;
         const { eventId, eventName, rating, comments } = req.body;
         logger.info(`feedback requested for user: ${userId} for the event ${eventId}`);
         const feedback = await Feedback.create({
             eventId,
             eventName,
-           userId: req.user._id,
+            
+           userId: req.user._id || req.user.id,
             rating,
             comments
         });
+        console.log(req.user._id);
         logger.info(`feedback created for user: ${userId} for the event ${eventId}`);
         res.status(200).json({ message: "Feedback submitted successfully", feedback })
 

@@ -1,8 +1,12 @@
 import express from "express";
 import multer from "multer";
 
+import { getUsers } from '../controllers/adminController.js';
+import { verifyToken, verifyAdmin } from '../middleware/authMiddleware.js';
 
 const adminRouter=express.Router();
+
+adminRouter.get('/get-users', verifyToken, verifyAdmin, getUsers);
 
 const storage = multer.diskStorage({
     destination: "./uploads",
