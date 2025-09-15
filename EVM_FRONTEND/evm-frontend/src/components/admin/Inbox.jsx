@@ -14,7 +14,7 @@ function Inbox() {
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await fetch('http://13.48.125.242:8000/api/admin-get', {
+                const response = await fetch('http://localhost:5555/api/admin-get', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ function Inbox() {
         }
 
         try {
-            const response = await fetch('http://13.48.125.242:8000/api/admin-post', {
+            const response = await fetch('http://localhost:5555/api/admin-post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ function Inbox() {
     };
 
     if (loading) {
-        return <div className="inbox-status">Loading contact messages...</div>;
+        // return <div className="inbox-status">Loading contact messages...</div>;
     }
 
     if (error) {

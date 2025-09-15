@@ -23,7 +23,7 @@ const Feedback = () => {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-        const response = await fetch(`http://13.48.125.242:8000/api/getevent/${id}`, {
+        const response = await fetch(`http://localhost:5555/api/getevent/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const Feedback = () => {
     event.preventDefault();
     const fetchPostFeedback = async () => {
       try {
-        const response = await fetch(`http://13.48.125.242:8000/api/feedback`, {
+        const response = await fetch(`http://localhost:5555/api/feedback`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -114,6 +114,107 @@
   background-color: #cc3c2b;
 }
 
+
+.homepage-users-container {
+  position: relative; /* added */
+  margin: 40px auto;
+  max-width: 900px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 15px;
+  border: 2px solid #E64833;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  backdrop-filter: blur(5px);
+}
+
+/* Table Heading */
+.homepage-users-container h2 {
+  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 700;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+/* Users Table */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 18px;
+  text-align: left;
+}
+
+/* Table Header */
+.users-table thead tr {
+  background-color: rgba(230, 72, 51, 0.8);
+}
+
+.users-table thead th {
+  padding: 12px;
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid #fff;
+}
+
+/* Table Rows */
+.users-table tbody tr {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s;
+}
+
+.users-table tbody tr:hover {
+  background-color: rgba(230, 72, 51, 0.3);
+}
+
+/* Table Cells */
+.users-table td {
+  padding: 12px;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  word-break: break-word;
+}
+
+/* Scroll if too many users */
+.users-table tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.users-table thead, .users-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Button hover effect */
+.homepage-admin-button {
+  margin-top: 20px;
+}
+
+/* Close button for users table */
+.users-close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background-color: rgba(230, 72, 51, 0.8);
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.users-close-button:hover {
+  background-color: #cc3c2b;
+}
+
+
 .homepage-collaborations {
   display: flex;
   flex-direction: row;

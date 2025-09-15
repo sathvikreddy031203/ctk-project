@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchAuth = useCallback(async () => {
 
-        const response = await fetch(`http://13.48.125.242:8000/api/authme`, {
+        const response = await fetch(`http://localhost:5555/api/authme`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (userEmail, password) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://13.48.125.242:8000/api/login`, {
+            const response = await fetch(`http://localhost:5555/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

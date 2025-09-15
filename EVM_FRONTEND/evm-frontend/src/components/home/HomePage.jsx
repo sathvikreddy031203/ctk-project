@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utilities/AuthProvider';
+import Footer from '../utilities/Footer';
 // import colab1 from "../../assets";
 
 const HomePage = () => {
   const{isAdmin,isAuthenticated} =useAuth();
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
+  const [users, setUsers] = useState([]);
+const [showUsers, setShowUsers] = useState(false);
+
 
   useEffect(() => {
-    fetch('http://13.48.125.242:8000/api/getevents', {
+    fetch('http://localhost:5555/api/getevents', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -27,6 +31,25 @@ const HomePage = () => {
       })
   }, []);
 
+
+    const handleFetchUsers = () => {
+  fetch('http://localhost:5555/api/get-users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+    },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('Failed to fetch users');
+      return res.json();
+    })
+    .then((data) => {
+      setUsers(data.users || []);
+      setShowUsers(true); // show after fetching
+    })
+    .catch((err) => console.error(err));
+};
 
   const handleEventClick = (id) => {
     console.log(id);
@@ -78,8 +101,50 @@ const HomePage = () => {
                   Create New Event
                 </a>
               </div>
+              <button
+                className="homepage-admin-button"
+                onClick={handleFetchUsers}
+              >
+                View Users
+              </button>
             </div>
           )}
+
+          {showUsers && (
+  <div className="homepage-users-container">
+    <button
+      className="users-close-button"
+      onClick={() => setShowUsers(false)}
+    >
+      ✖
+    </button>
+    <h2>Users List</h2>
+    {users.length === 0 ? (
+      <p>No users found.</p>
+    ) : (
+      <table className="users-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.userName}</td>
+              <td>{user.userEmail}</td>
+              <td>{user.userPhonenumber}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+)}
+
+
           <div className="homepage-collaborations">
             <div className="homepage-vision">
               <h2>Our Vision</h2>
@@ -126,6 +191,7 @@ const HomePage = () => {
 
           <button type="submit" className="homepage-moreeventsBtn" onClick={handleMoreEvents}>More events...</button>
         </div>
+        <Footer />
       </div>
     </>
   );
