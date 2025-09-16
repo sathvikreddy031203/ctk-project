@@ -87,10 +87,26 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = useCallback(() => {
-        localStorage.removeItem('jwt_token');
-        setUser(null);
-    }, []);
+    // const logout = useCallback(() => {
+    //     localStorage.removeItem('jwt_token');
+    //     setUser(null);
+    // }, []);
+    
+     const logout = async () => {
+    const token = localStorage.getItem('jwt_token');
+    if (token) {
+        await fetch('http://localhost:5555/api/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    }
+    localStorage.removeItem('jwt_token');
+    setUser(null);
+};
+
 
     const value = {
         user,

@@ -13,17 +13,17 @@ const faqData = [
             {
                 id: 'general-1',
                 question: 'What is CTK Events?',
-                answer: 'CTK Events is a comprehensive online platform designed to simplify event creation, management, and attendance. We provide tools for organizers to host seamless events and for attendees to discover and register for exciting experiences.'
+                answer: 'CTK Events is a comprehensive online platform designed to simplify event creation, management, and attendance. We provide tools for organizers to host events and for attendees to discover and register for exciting experiences.'
             },
             {
                 id: 'general-2',
                 question: 'Who can use CTK Events?',
-                answer: 'Anyone looking to host or attend events can use CTK Events. This includes event organizers, businesses, community groups, and individual participants.'
+                answer: 'CTK can be used by attendees to book events and admins to manage events'
             },
             {
                 id: 'general-3',
                 question: 'Is CTK Events free to use?',
-                answer: 'Our platform offers various plans, including a free tier with basic features for organizers and a free experience for attendees. Premium features for organizers may involve subscription fees or a percentage of ticket sales.'
+                answer: 'CTK events are currently free, but in the future, tiered pricing may be introduced for different levels of access or features.'
             },
             {
                 id: 'general-4',
@@ -40,23 +40,15 @@ const faqData = [
             {
                 id: 'attendees-1',
                 question: 'How do I register for an event?',
-                answer: 'Simply navigate to the event page you wish to attend, click on the "Register" or "Get Tickets" button, fill in the required details, and complete the payment process if applicable. You will receive a confirmation email upon successful registration.'
+                answer: 'To register for a CTK event, visit the events page and select your desired event.Then provide your name and contact details, submit the form, and you will receive a confirmation.'
             },
             {
                 id: 'attendees-2',
                 question: 'I didn\'t receive a confirmation email, what should I do?',
                 answer: 'First, please check your spam or junk folder. If it\'s not there, you can log into your CTK Events account, go to "My Registrations," and check the status. If you still can\'t find it, please contact the event organizer directly or our support team.'
             },
-            {
-                id: 'attendees-3',
-                question: 'Can I modify my registration details after signing up?',
-                answer: 'This depends on the event organizer\'s settings. Some events allow attendees to modify details through their account dashboard. If not, please contact the event organizer for assistance.'
-            },
-            {
-                id: 'attendees-4',
-                question: 'How do refunds work if an event is canceled or postponed?',
-                answer: 'Refund policies are set by individual event organizers. If an event is canceled, you will typically be notified by the organizer regarding refund procedures. For postponed events, your ticket usually remains valid for the new date, or refund options may be provided.'
-            }
+           
+            
         ]
     },
     {
@@ -64,26 +56,14 @@ const faqData = [
         category: 'For Event Organizers',
         icon: faCalendarPlus,
         questions: [
-            {
-                id: 'organizers-1',
-                question: 'How do I create an organizer account?',
-                answer: 'Click on the "Sign Up" button on the homepage, select the "Organizer" option, and follow the prompts to set up your account. You\'ll need to provide some basic information about your organization or yourself.'
-            },
+          
             {
                 id: 'organizers-2',
                 question: 'What are the steps to set up a new event?',
                 answer: 'Once logged in as an organizer, navigate to your "Organizer Dashboard." Click "Create New Event" and follow the guided steps to add details, schedule, ticket types, and publishing options. Our intuitive interface makes it easy!'
             },
-            {
-                id: 'organizers-3',
-                question: 'How do I manage attendee registrations?',
-                answer: 'From your Organizer Dashboard, you can view, manage, and export your attendee list. You can also send messages to registered attendees and issue refunds if necessary.'
-            },
-            {
-                id: 'organizers-4',
-                question: 'What reporting and analytics are available for my event?',
-                answer: 'Our platform provides comprehensive dashboards with real-time data on ticket sales, attendance, page views, and more to help you track your event\'s performance.'
-            }
+           
+           
         ]
     },
     {
