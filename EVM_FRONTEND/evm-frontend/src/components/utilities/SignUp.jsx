@@ -70,7 +70,7 @@ const SignUp = () => {
         }
         
     fetch('http://localhost:5555/api/signup', {
-      method: ['POST'],
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },

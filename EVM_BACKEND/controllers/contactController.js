@@ -66,7 +66,7 @@ export const admin_post=async(req,res)=>{
     try {
       logger.info(`admin has requested to reply to contact us request`);
         const { contactId, userEmail, adminReply } = req.body;
-        console.log(req.body);
+        //console.log(req.body);
     
         if (!contactId || !adminReply || !userEmail) {
           logger.warn(` admin has failed to reply to contact us request due to missing fields`);

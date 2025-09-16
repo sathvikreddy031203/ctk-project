@@ -135,7 +135,7 @@ function Inbox() {
                                         <p className="inbox-resolved-status">
                                             {contact.isResolved
                                                 ? 'This enquiry has been resolved.'
-                                                : 'User not found, please mail them directly.'}
+                                                : 'This enquiry has been resolved.'}
                                         </p>
                                     </div>
                                 ) : (

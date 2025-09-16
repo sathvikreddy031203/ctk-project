@@ -57,7 +57,7 @@ export const sendBookingConfirmationMail = async (
     });
 
     console.log("✅ Booking confirmation mail sent:", info.response);
-    console.log("Mail info object:", info);
+    //console.log("Mail info object:", info);
     return info;
   } catch (err) {
     console.error("❌ Error sending booking confirmation mail:", err);
