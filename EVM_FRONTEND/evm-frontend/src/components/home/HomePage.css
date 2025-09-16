@@ -460,3 +460,59 @@
   .homepage-eventcard { max-width: 220px; }
   .homepage-eventcard-container { height: 220px; }
 }
+
+/* Mobile: stack vision and collabs vertically */
+@media (max-width: 768px) {
+  .homepage-collaborations {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px; /* reduce margin so it looks balanced */
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .homepage-vision,
+  .homepage-collabs {
+    width: 90%; /* take most of the width */
+    margin: 10px 0; /* spacing between them */
+    text-align: center; /* center text for smaller screens */
+  }
+
+  .homepage-collabs h2 {
+    text-align: center;
+  }
+
+  .homepage-collabs-logos {
+    flex-wrap: wrap; /* logos wrap neatly */
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .homepage-collabs-logos img {
+    height: 40px; /* shrink logos a bit */
+    margin: 5px;
+  }
+}
+
+/* Extra small devices (phones < 426px) */
+@media (max-width: 426px) {
+  .homepage-vision h2,
+  .homepage-collabs h2 {
+    font-size: 24px;
+  }
+
+  .homepage-vision p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-admin-button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-top: 15px;
+  }
+}
