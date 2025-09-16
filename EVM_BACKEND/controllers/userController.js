@@ -10,7 +10,7 @@ import { logger } from '../logs/logs.js';
 
 const createToken = (id, isAdmin) => {
     return jwt.sign({ id, isAdmin }, process.env.JWT_SECRET, {
-        expiresIn: 259200
+        expiresIn: '15m'
     });
 };
 

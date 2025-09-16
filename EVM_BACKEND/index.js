@@ -13,6 +13,7 @@ import notificationRouter from "./routes/notificationRoute.js";
 import contactRouter from "./routes/contactRoute.js";
 import jwt from 'jsonwebtoken';
 import paymentRoute from './routes/paymentRoute.js';
+import logoutRoute from './routes/logoutRoute.js';
 
 
 
@@ -37,6 +38,7 @@ app.use("/api", servicesRouter);
 app.use("/api", notificationRouter);
 app.use("/api", contactRouter);
 app.use('/api', paymentRoute);
+app.use('/api', logoutRoute);
 
 
 // ------------------ SERVER START ------------------
