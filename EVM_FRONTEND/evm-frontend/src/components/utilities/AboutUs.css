@@ -5,14 +5,16 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   color: #fff;
   text-align: center;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
 
 .aboutus-header {
@@ -23,10 +25,10 @@
 .aboutus-header h1 {
   font-weight: bold;
   color: #000000;
-  font-size: 200px;
+  font-size: clamp(80px, 10vw, 200px);
   margin-top: 7px;
   margin-bottom: 10px;
-  padding: 0px;
+  padding: 0;
   opacity: 0;
   transform: translateY(-50px);
   animation: fadeInDown 1s ease-out forwards;
@@ -35,7 +37,8 @@
 .aboutus-main-container p {
   text-align: center;
   font-size: 15px;
-  width: 700px;
+  width: 90%;
+  max-width: 650px;
   margin: 0 auto;
   margin-top: 7px;
   padding: 20px;
@@ -46,6 +49,7 @@
   transform: translateY(50px);
   animation: fadeInUp 1s ease-out forwards;
   animation-delay: 0.5s;
+  box-sizing: border-box;
 }
 
 @keyframes fadeInDown {
@@ -53,7 +57,6 @@
     opacity: 0;
     transform: translateY(-50px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -65,39 +68,109 @@
     opacity: 0;
     transform: translateY(50px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-@media (max-width: 426px) {
+/* Mobile phones */
+@media (max-width: 425px) {
   .aboutus-main-container {
-    margin-left: 60px;
+    background-attachment: scroll;
+    padding-left: 70px; /* space for sidebar, without using margin */
+    padding-right: 10px;
+    padding-top: 10px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    min-height: 100vh; /* allow growing if content is taller */
+    box-sizing: border-box; /* include padding in width calculation */
   }
 
   .aboutus-header h1 {
-    font-size: 80px;
+    font-size: 60px;
   }
 
   .aboutus-main-container p {
-    width: 300px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 15px;
+    padding: 15px;
+    font-size: 14px;
   }
-
 }
 
-@media (max-width: 780px) and (min-width: 426px) {
+/* Small tablets / large phones */
+@media (min-width: 426px) and (max-width: 780px) {
   .aboutus-main-container {
-    margin-left: 60px;
-  }
-  
-  .aboutus-header h1 {
-    font-size: 100px;
-  }
-  
-  .aboutus-main-container p {
-    width: 500px;
+    background-attachment: scroll;
+    padding-left: 80px; /* space for sidebar */
+    padding-right: 15px;
+    padding-top: 15px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    min-height: 100vh;
+    box-sizing: border-box;
   }
 
+  .aboutus-header h1 {
+    font-size: 90px;
+  }
+
+  .aboutus-main-container p {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 15px;
+    padding: 20px;
+    font-size: 15px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 781px) and (max-width: 1024px) {
+  .aboutus-main-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .aboutus-header h1 {
+    font-size: 150px;
+  }
+
+  .aboutus-main-container p {
+    max-width: 600px;
+  }
+}
+
+/* Small laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .aboutus-main-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .aboutus-header h1 {
+    font-size: 180px;
+  }
+
+  .aboutus-main-container p {
+    max-width: 650px;
+  }
+}
+
+/* Large desktops */
+@media (min-width: 1441px) {
+  .aboutus-main-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .aboutus-header h1 {
+    font-size: 200px;
+  }
+
+  .aboutus-main-container p {
+    max-width: 700px;
+  }
 }
